@@ -56,3 +56,38 @@ steps:
     bucketName: '$(bucket-front-code-name)'
     sourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist/angular-app'
     globExpressions: '**'
+
+- script: |
+    sudo apt-get install zip -y
+    cd $(System.DefaultWorkingDirectory)/backend/
+    zip -r $(Build.StagingDirectory)/backend.zip .
+  displayName: 'Compress backend folder into zip'
+
+
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: 'us-east-1'
+    bucketName: '$(bucket-source-code)'
+    sourceFolder: '$(Build.StagingDirectory)'
+    globExpressions: 'backend.zip'
+
+- task: LambdaDeployFunction@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: 'us-east-1'
+    deploymentMode: 'codeonly'
+    functionName: '$(getFuctionName)'
+    codeLocation: 's3object'
+    s3Bucket: '$(bucket-source-code)'
+    s3ObjectKey: '$(objectName)'
+
+- task: LambdaDeployFunction@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: 'us-east-1'
+    deploymentMode: 'codeonly'
+    functionName: '$(postFunctionName)'
+    codeLocation: 's3object'
+    s3Bucket: '$(bucket-source-code)'
+    s3ObjectKey: '$(objectName)'
