@@ -48,3 +48,11 @@ steps:
   inputs:
     artifactName: 'dist'
     pathtoPublish: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist'
+
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: 'us-east-1'
+    bucketName: '$(bucket-front-code-name)'
+    sourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist/angular-app'
+    globExpressions: '**'
