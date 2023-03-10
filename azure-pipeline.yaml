@@ -29,8 +29,16 @@ steps:
     command: 'custom'
     customCommand: 'install @angular-devkit/build-angular --save-dev'
 
-
 - task: Npm@1
   inputs:
-    command: 'install'
+    command: 'custom'
+    customCommand: 'run build -- --prod'
     workingDir: '$(System.DefaultWorkingDirectory)/frontend/angular-app'
+  displayName: 'Build Angular App'
+  
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/angular-app'
+  displayName: 'Copy Angular App artifacts'
