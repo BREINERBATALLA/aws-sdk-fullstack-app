@@ -20,7 +20,8 @@ steps:
     targetType: 'inline'
     script: |
       env
-
+- script: npm install -g @angular/cli
+  displayName: 'Install Angular CLI'
 - task: Npm@1
   inputs:
     command: 'custom'
