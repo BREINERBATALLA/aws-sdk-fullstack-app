@@ -41,7 +41,7 @@ steps:
     targetType: 'inline'
     script: |
       sed -i "s|{url}|$url|" src/environments/environment.prod.ts
-      ng build --prod
+      ng build 
     workingDirectory: '$(System.DefaultWorkingDirectory)/frontend/angular-app'
 
 - task: PublishBuildArtifacts@1
