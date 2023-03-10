@@ -28,6 +28,8 @@ steps:
       npm install -g @angular/cli
   displayName: 'Install Angular CLI'
 
+- script: ng config -g cli.warnings.versionMismatch false
+  displayName: 'Disable Angular CLI version mismatch warning'
 
 - task: Npm@1
   inputs:
