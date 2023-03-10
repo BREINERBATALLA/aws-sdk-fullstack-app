@@ -4,4 +4,16 @@ trigger:
 pool:
    vmImage: 'ubuntu-20.04'
 
+variables:
+   group: 
+
 steps:
+
+- task: PowerShell@2
+  displayName: 'Show Environment Variables'
+  inputs:
+    targetType: 'inline'
+    script: |
+      Get-ChildItem Env:
+
+
