@@ -8,16 +8,15 @@ variables:
    group: prueba_variables
 
 steps:
-- task: PowerShell@2
+
+- task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      Write-Host "$(bucket-source-code)
-- task: PowerShell@2
-  displayName: 'Show Environment Variables'
+      echo $(bucket-source-code)
+
+- task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      Get-ChildItem Env:
-
-
+      echo printenv
