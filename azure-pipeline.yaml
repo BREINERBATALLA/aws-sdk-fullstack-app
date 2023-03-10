@@ -20,9 +20,17 @@ steps:
     targetType: 'inline'
     script: |
       env
+
+- script: npm install -g @angular/cli
+  displayName: 'Install Angular CLI'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'install @angular-devkit/build-angular --save-dev'
+
 - task: Npm@1
   inputs:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/frontend/angular-app/'
     customCommand: 'run build -- --url=$(url)'
-
