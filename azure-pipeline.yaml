@@ -32,5 +32,5 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    workingDir: '$(System.DefaultWorkingDirectory)/frontend/angular-app/'
-    customCommand: 'run build -- --url=$(url)'
+    customCommand: 'install --url=$(url)'
+
