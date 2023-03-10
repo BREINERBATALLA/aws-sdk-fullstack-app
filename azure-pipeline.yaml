@@ -26,20 +26,18 @@ steps:
 
 - task: Npm@1
   inputs:
-    command: 'custom'
-    customCommand: 'install @angular-devkit/build-angular --save-dev'
-
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'run build -- --url=$(url)'
+    command: 'install'
     workingDir: '$(System.DefaultWorkingDirectory)/frontend/angular-app'
-  displayName: 'Build Angular app'
 
-  
-- task: CopyFiles@2
+- task: Bash@3
   inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/angular-app'
-  displayName: 'Copy Angular App artifacts'
+    targetType: 'inline'
+    script: |
+      sed -i "s|{url}|$url|" src/environments/environment.prod.ts
+      ng build --prod
+    workingDirectory: '$(System.DefaultWorkingDirectory)/frontend/angular-app'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: 'dist'
+    pathtoPublish: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist'
