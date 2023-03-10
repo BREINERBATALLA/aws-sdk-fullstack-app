@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 })
 export class TaskService {
 
-  uri = environment.uri
 
   constructor(private http : HttpClient) { }
 
