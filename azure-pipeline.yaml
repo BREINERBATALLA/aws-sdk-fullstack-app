@@ -20,3 +20,9 @@ steps:
     targetType: 'inline'
     script: |
       env
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(System.DefaultWorkingDirectory)/frontend/angular-app'
+    customCommand: 'run build -- --url=$(url)'
