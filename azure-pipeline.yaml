@@ -9,17 +9,6 @@ variables:
 
 steps:
 
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      echo $(bucket-source-code)
-
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      env
 
 - task: Bash@3
   inputs:
@@ -40,8 +29,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      sed -i "s|{url}|$url|" src/environments/environment.prod.ts
-      ng build 
+      ng build --configuration=production
+
     workingDirectory: '$(System.DefaultWorkingDirectory)/frontend/angular-app'
 
 - task: PublishBuildArtifacts@1
@@ -88,6 +77,26 @@ steps:
     regionName: 'us-east-1'
     deploymentMode: 'codeonly'
     functionName: '$(postFunctionName)'
+    codeLocation: 's3object'
+    s3Bucket: '$(bucket-source-code)'
+    s3ObjectKey: '$(objectName)'
+
+- task: LambdaDeployFunction@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: 'us-east-1'
+    deploymentMode: 'codeonly'
+    functionName: '$(deleteFunctionName)'
+    codeLocation: 's3object'
+    s3Bucket: '$(bucket-source-code)'
+    s3ObjectKey: '$(objectName)'
+
+- task: LambdaDeployFunction@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: 'us-east-1'
+    deploymentMode: 'codeonly'
+    functionName: '$(putFunctionName)'
     codeLocation: 's3object'
     s3Bucket: '$(bucket-source-code)'
     s3ObjectKey: '$(objectName)'
