@@ -4,19 +4,68 @@ trigger:
 pool:
    vmImage: 'ubuntu-20.04'
 
-
+variables:
+- group: context
 
 steps:
 
 - task: SystemsManagerGetParameter@1
   inputs:
     awsCredentials: 'AWSConnection'
-    regionName: 'us-east-1'
+    regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'UrlApiGateway'
+    parameterName: 'bucketNameCloudFront'
     parameterVersion: '1'
+
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: '$(region)'
+    readMode: 'single'
+    parameterName: 'bucketNameCode'
+    parameterVersion: '1'
+
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: '$(region)'
+    readMode: 'single'
+    parameterName: 'objectName'
+    parameterVersion: '1'
+
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: '$(region)'
+    readMode: 'single'
+    parameterName: 'postFunctionName'
+    parameterVersion: '1'
+
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: '$(region)'
+    readMode: 'single'
+    parameterName: 'putFunctionName'
+    parameterVersion: '1'
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: '$(region)'
+    readMode: 'single'
+    parameterName: 'getFunctionName'
+    parameterVersion: '1'
+
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: '$(region)'
+    readMode: 'single'
+    parameterName: 'deleteFunctionName'
+    parameterVersion: '1'
+
 - script: |
-    echo '$(UrlApiGateway)'
+    echo '$(deleteFunctionName)'
 - task: Bash@3
   inputs:
     targetType: 'inline'
@@ -37,26 +86,20 @@ steps:
     targetType: 'inline'
     script: |
       ng build --configuration=production
-
     workingDirectory: '$(System.DefaultWorkingDirectory)/frontend/angular-app'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    artifactName: 'dist'
-    pathtoPublish: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist'
 
 - task: S3Upload@1
   inputs:
     awsCredentials: 'AWSConnection'
-    regionName: 'us-east-1'
-    bucketName: '$(bucket-front-code-name)'
+    regionName: '$(region)'
+    bucketName: '$(bucketNameCloudFront)'
     sourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist/angular-app'
     globExpressions: '**'
 
 - script: |
     sudo apt-get install zip -y
     cd $(System.DefaultWorkingDirectory)/backend/
-    zip -r $(Build.StagingDirectory)/backend.zip .
+    zip -r $(Build.StagingDirectory)/$(objectName) .
   displayName: 'Compress backend folder into zip'
 
 
@@ -64,46 +107,46 @@ steps:
   inputs:
     awsCredentials: 'AWSConnection'
     regionName: 'us-east-1'
-    bucketName: '$(bucket-source-code)'
+    bucketName: '$(bucketNameCode)'
     sourceFolder: '$(Build.StagingDirectory)'
-    globExpressions: 'backend.zip'
+    globExpressions: '$(objectName)'
 
 - task: LambdaDeployFunction@1
   inputs:
     awsCredentials: 'AWSConnection'
-    regionName: 'us-east-1'
+    regionName: '$(region)'
     deploymentMode: 'codeonly'
     functionName: '$(getFuctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(bucket-source-code)'
+    s3Bucket: '$(bucketNameCode)'
     s3ObjectKey: '$(objectName)'
 
 - task: LambdaDeployFunction@1
   inputs:
     awsCredentials: 'AWSConnection'
-    regionName: 'us-east-1'
+    regionName: '$(region)'
     deploymentMode: 'codeonly'
     functionName: '$(postFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(bucket-source-code)'
+    s3Bucket: '$(bucketNameCode)'
     s3ObjectKey: '$(objectName)'
 
 - task: LambdaDeployFunction@1
   inputs:
     awsCredentials: 'AWSConnection'
-    regionName: 'us-east-1'
+    regionName: '$(region)'
     deploymentMode: 'codeonly'
     functionName: '$(deleteFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(bucket-source-code)'
+    s3Bucket: '$(bucketNameCode)'
     s3ObjectKey: '$(objectName)'
 
 - task: LambdaDeployFunction@1
   inputs:
     awsCredentials: 'AWSConnection'
-    regionName: 'us-east-1'
+    regionName: '$(region)'
     deploymentMode: 'codeonly'
     functionName: '$(putFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(bucket-source-code)'
+    s3Bucket: '$(bucketNameCode)'
     s3ObjectKey: '$(objectName)'
