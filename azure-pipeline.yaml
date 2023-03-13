@@ -15,7 +15,8 @@ steps:
     readMode: 'single'
     parameterName: 'UrlApiGateway'
     parameterVersion: '1'
-
+- script: |
+    echo '$(UrlApiGateway)'
 - task: Bash@3
   inputs:
     targetType: 'inline'
