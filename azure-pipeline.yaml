@@ -11,7 +11,7 @@ steps:
 
 - task: SystemsManagerGetParameter@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     readMode: 'single'
     parameterName: 'BucketNameCloudFront'
@@ -19,7 +19,7 @@ steps:
 
 - task: SystemsManagerGetParameter@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     readMode: 'single'
     parameterName: 'BucketNameCode'
@@ -27,7 +27,7 @@ steps:
 
 - task: SystemsManagerGetParameter@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     readMode: 'single'
     parameterName: 'ObjectName'
@@ -35,7 +35,7 @@ steps:
 
 - task: SystemsManagerGetParameter@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     readMode: 'single'
     parameterName: 'PostFunctionName'
@@ -43,14 +43,14 @@ steps:
 
 - task: SystemsManagerGetParameter@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     readMode: 'single'
     parameterName: 'PutFunctionName'
     parameterVersion: '1'
 - task: SystemsManagerGetParameter@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     readMode: 'single'
     parameterName: 'GetFunctionName'
@@ -58,7 +58,7 @@ steps:
 
 - task: SystemsManagerGetParameter@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     readMode: 'single'
     parameterName: 'DeleteFunctionName'
@@ -88,7 +88,7 @@ steps:
 
 - task: S3Upload@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     bucketName: '$(BucketNameCloudFront)'
     sourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist/angular-app'
@@ -103,7 +103,7 @@ steps:
 
 - task: S3Upload@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     bucketName: '$(BucketNameCode)'
     sourceFolder: '$(Build.StagingDirectory)'
@@ -111,7 +111,7 @@ steps:
 
 - task: LambdaDeployFunction@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
     functionName: '$(GetFunctionName)'
@@ -121,7 +121,7 @@ steps:
 
 - task: LambdaDeployFunction@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
     functionName: '$(PostFunctionName)'
@@ -131,7 +131,7 @@ steps:
 
 - task: LambdaDeployFunction@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
     functionName: '$(DeleteFunctionName)'
@@ -141,7 +141,7 @@ steps:
 
 - task: LambdaDeployFunction@1
   inputs:
-    awsCredentials: 'AWSConnection'
+    awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
     functionName: '$(PutFunctionName)'
