@@ -14,7 +14,7 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'bucketNameCloudFront'
+    parameterName: 'BucketNameCloudFront'
     parameterVersion: '1'
 
 - task: SystemsManagerGetParameter@1
@@ -22,7 +22,7 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'bucketNameCode'
+    parameterName: 'BucketNameCode'
     parameterVersion: '1'
 
 - task: SystemsManagerGetParameter@1
@@ -30,7 +30,7 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'objectName'
+    parameterName: 'ObjectName'
     parameterVersion: '1'
 
 - task: SystemsManagerGetParameter@1
@@ -38,7 +38,7 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'postFunctionName'
+    parameterName: 'PostFunctionName'
     parameterVersion: '1'
 
 - task: SystemsManagerGetParameter@1
@@ -46,14 +46,14 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'putFunctionName'
+    parameterName: 'PutFunctionName'
     parameterVersion: '1'
 - task: SystemsManagerGetParameter@1
   inputs:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'getFunctionName'
+    parameterName: 'GetFunctionName'
     parameterVersion: '1'
 
 - task: SystemsManagerGetParameter@1
@@ -61,7 +61,7 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'deleteFunctionName'
+    parameterName: 'DeleteFunctionName'
     parameterVersion: '1'
 
 - script: |
@@ -92,61 +92,61 @@ steps:
   inputs:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
-    bucketName: '$(bucketNameCloudFront)'
+    bucketName: '$(BucketNameCloudFront)'
     sourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist/angular-app'
     globExpressions: '**'
 
 - script: |
     sudo apt-get install zip -y
     cd $(System.DefaultWorkingDirectory)/backend/
-    zip -r $(Build.StagingDirectory)/$(objectName) .
+    zip -r $(Build.StagingDirectory)/$(ObjectName) .
   displayName: 'Compress backend folder into zip'
 
 
 - task: S3Upload@1
   inputs:
     awsCredentials: 'AWSConnection'
-    regionName: 'us-east-1'
-    bucketName: '$(bucketNameCode)'
+    regionName: '$(region)'
+    bucketName: '$(BucketNameCode)'
     sourceFolder: '$(Build.StagingDirectory)'
-    globExpressions: '$(objectName)'
+    globExpressions: '$(ObjectName)'
 
 - task: LambdaDeployFunction@1
   inputs:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(getFuctionName)'
+    functionName: '$(GetFuctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(bucketNameCode)'
-    s3ObjectKey: '$(objectName)'
+    s3Bucket: '$(BucketNameCode)'
+    s3ObjectKey: '$(ObjectName)'
 
 - task: LambdaDeployFunction@1
   inputs:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(postFunctionName)'
+    functionName: '$(PostFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(bucketNameCode)'
-    s3ObjectKey: '$(objectName)'
+    s3Bucket: '$(BucketNameCode)'
+    s3ObjectKey: '$(ObjectName)'
 
 - task: LambdaDeployFunction@1
   inputs:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(deleteFunctionName)'
+    functionName: '$(DeleteFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(bucketNameCode)'
-    s3ObjectKey: '$(objectName)'
+    s3Bucket: '$(BucketNameCode)'
+    s3ObjectKey: '$(ObjectName)'
 
 - task: LambdaDeployFunction@1
   inputs:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(putFunctionName)'
+    functionName: '$(PutFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(bucketNameCode)'
-    s3ObjectKey: '$(objectName)'
+    s3Bucket: '$(BucketNameCode)'
+    s3ObjectKey: '$(ObjectName)'
