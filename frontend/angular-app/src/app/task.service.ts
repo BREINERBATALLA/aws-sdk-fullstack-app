@@ -10,18 +10,18 @@ export class TaskService {
   constructor(private http : HttpClient) { }
 
   getAll() {
-    return this.http.get(`https://cgsj2610cb.execute-api.us-east-1.amazonaws.com/prod/tasks`)
+    return this.http.get(`https://iuudd1gipc.execute-api.us-east-1.amazonaws.com/prod/tasks`)
   }
   
   create(task: any){
-    return this.http.post(`https://cgsj2610cb.execute-api.us-east-1.amazonaws.com/prod/tasks`,task)
+    return this.http.post(`https://iuudd1gipc.execute-api.us-east-1.amazonaws.com/prod/tasks`,task)
   }
 
   update(id: String, task:any){
-    return this.http.put(`https://cgsj2610cb.execute-api.us-east-1.amazonaws.com/prod/tasks/`+id, task)
+    return this.http.put(`https://iuudd1gipc.execute-api.us-east-1.amazonaws.com/prod/tasks/`+id, task)
   }
 
   delete(id: String) {
-    return this.http.delete(`https://cgsj2610cb.execute-api.us-east-1.amazonaws.com/prod/tasks/` + id)
+    return this.http.delete(`https://iuudd1gipc.execute-api.us-east-1.amazonaws.com/prod/tasks/` + id)
   }
 }
