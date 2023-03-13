@@ -116,7 +116,7 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(GetFuctionName)'
+    functionName: '$(GetFunctionName)'
     codeLocation: 's3object'
     s3Bucket: '$(BucketNameCode)'
     s3ObjectKey: '$(ObjectName)'
