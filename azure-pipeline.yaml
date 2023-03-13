@@ -64,8 +64,6 @@ steps:
     parameterName: 'DeleteFunctionName'
     parameterVersion: '1'
 
-- script: |
-    echo '$(deleteFunctionName)'
 - task: Bash@3
   inputs:
     targetType: 'inline'
