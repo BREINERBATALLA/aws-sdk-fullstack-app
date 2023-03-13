@@ -4,11 +4,17 @@ trigger:
 pool:
    vmImage: 'ubuntu-20.04'
 
-variables:
-- group: prueba_variables
+
 
 steps:
 
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: 'us-east-1'
+    readMode: 'single'
+    parameterName: 'UrlApiGateway'
+    parameterVersion: '1'
 
 - task: Bash@3
   inputs:
