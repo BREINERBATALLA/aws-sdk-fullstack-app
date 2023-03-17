@@ -1,6 +1,7 @@
 trigger:
  - main
 
+
 pool:
    vmImage: 'ubuntu-20.04'
 
@@ -86,6 +87,11 @@ steps:
     bucketName: '$(bucketCloudfront)'
     sourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist/angular-app'
     globExpressions: '**'
+
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: '$(System.DefaultWorkingDirectory)/backend'
 
 - script: |
     sudo apt-get install zip -y
