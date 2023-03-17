@@ -137,7 +137,7 @@ function buildResponse(statusCode, body) {
       "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
       "Access-Control-Allow-Methods": "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT"
     },
-    body: JSON.stringify({body}),
+    body: JSON.stringify(body),
     isBase64Encoded: false
   };
 }
