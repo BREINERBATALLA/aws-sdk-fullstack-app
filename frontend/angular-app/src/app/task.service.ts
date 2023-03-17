@@ -10,38 +10,20 @@ export class TaskService {
   constructor(private http : HttpClient) { }
 
   getAll() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'access-control-allow-origin': '*' // reemplaza "*" con tu origen permitido si no deseas permitir todas las solicitudes
-      })
-    };
-    return this.http.get(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks`,httpOptions)
+    return this.http.get(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks`)
   }
   
   create(task: any){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'access-control-allow-origin': '*' // reemplaza "*" con tu origen permitido si no deseas permitir todas las solicitudes
-      })
-    };
-    return this.http.post(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks`, task, httpOptions)
+
+    return this.http.post(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks`, task)
   }
 
   update(id: String, task:any){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'access-control-allow-origin': '*' // reemplaza "*" con tu origen permitido si no deseas permitir todas las solicitudes
-      })
-    };
-    return this.http.put(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks/`+id, task, httpOptions)
+
+    return this.http.put(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks/`+id, task)
   }
 
   delete(id: String) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'access-control-allow-origin': '*' // reemplaza "*" con tu origen permitido si no deseas permitir todas las solicitudes
-      })
-    };
-    return this.http.delete(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks/` + id,httpOptions)
+    return this.http.delete(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks/` + id)
   }
 }
