@@ -21,7 +21,7 @@ export class TaskService {
   create(task: any){
     const httpOptions = {
       headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': '*' // reemplaza "*" con tu origen permitido si no deseas permitir todas las solicitudes
+        'Access-Control-Allow-Origin': '*' 
       })
     };
     return this.http.post(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks`,httpOptions, task)
