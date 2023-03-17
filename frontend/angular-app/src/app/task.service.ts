@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -10,11 +10,21 @@ export class TaskService {
   constructor(private http : HttpClient) { }
 
   getAll() {
-    return this.http.get(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks`)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*' // reemplaza "*" con tu origen permitido si no deseas permitir todas las solicitudes
+      })
+    };
+    return this.http.get(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks`,httpOptions)
   }
   
   create(task: any){
-    return this.http.post(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks`,task)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*' // reemplaza "*" con tu origen permitido si no deseas permitir todas las solicitudes
+      })
+    };
+    return this.http.post(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks`,httpOptions, task)
   }
 
   update(id: String, task:any){
