@@ -14,7 +14,7 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'BucketNameCloudFront'
+    parameterName: 'bucketCloudfront'
     parameterVersion: '1'
 
 - task: SystemsManagerGetParameter@1
@@ -22,7 +22,16 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'BucketNameCode'
+    parameterName: 'bucketSourceCode'
+    parameterVersion: '1'
+
+
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: '$(region)'
+    readMode: 'single'
+    parameterName: 'postFunctionName'
     parameterVersion: '1'
 
 - task: SystemsManagerGetParameter@1
@@ -30,7 +39,14 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'ObjectName'
+    parameterName: 'putFunctionName'
+    parameterVersion: '1'
+- task: SystemsManagerGetParameter@1
+  inputs:
+    awsCredentials: 'AWSConnection'
+    regionName: '$(region)'
+    readMode: 'single'
+    parameterName: 'getFunctionName'
     parameterVersion: '1'
 
 - task: SystemsManagerGetParameter@1
@@ -38,30 +54,7 @@ steps:
     awsCredentials: 'AWSConnection'
     regionName: '$(region)'
     readMode: 'single'
-    parameterName: 'PostFunctionName'
-    parameterVersion: '1'
-
-- task: SystemsManagerGetParameter@1
-  inputs:
-    awsCredentials: 'AWSConnection'
-    regionName: '$(region)'
-    readMode: 'single'
-    parameterName: 'PutFunctionName'
-    parameterVersion: '1'
-- task: SystemsManagerGetParameter@1
-  inputs:
-    awsCredentials: 'AWSConnection'
-    regionName: '$(region)'
-    readMode: 'single'
-    parameterName: 'GetFunctionName'
-    parameterVersion: '1'
-
-- task: SystemsManagerGetParameter@1
-  inputs:
-    awsCredentials: 'AWSConnection'
-    regionName: '$(region)'
-    readMode: 'single'
-    parameterName: 'DeleteFunctionName'
+    parameterName: 'deleteFunctionName'
     parameterVersion: '1'
 
 - script: |
