@@ -15,7 +15,7 @@ export class TaskService {
         'Access-Control-Allow-Origin': '*' // reemplaza "*" con tu origen permitido si no deseas permitir todas las solicitudes
       })
     };
-    return this.http.get(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks`,httpOptions)
+    return this.http.get(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks`,httpOptions)
   }
   
   create(task: any){
@@ -24,14 +24,14 @@ export class TaskService {
         'Access-Control-Allow-Origin': '*' 
       })
     };
-    return this.http.post(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks`,httpOptions, task)
+    return this.http.post(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks`,httpOptions, task)
   }
 
   update(id: String, task:any){
-    return this.http.put(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks/`+id, task)
+    return this.http.put(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks/`+id, task)
   }
 
   delete(id: String) {
-    return this.http.delete(`https://ojlkd0ma56.execute-api.us-east-1.amazonaws.com/prod/tasks/` + id)
+    return this.http.delete(`https://k0al33e307.execute-api.us-east-1.amazonaws.com/prod/tasks/` + id)
   }
 }
