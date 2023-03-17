@@ -15,7 +15,7 @@ exports.getTasks = async function (event) {
   const body = {
     tasks: allTask,
   };
-  return buildResponse(200, body);
+  return buildResponse(200, body.tasks);
 }
 
 async function scanDynamoRecords(scanParams, itemArray) {
