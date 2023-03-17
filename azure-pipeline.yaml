@@ -83,7 +83,7 @@ steps:
   inputs:
     awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
-    bucketName: '$(BucketNameCloudFront)'
+    bucketName: '$(bucketCloudfront)'
     sourceFolder: '$(System.DefaultWorkingDirectory)/frontend/angular-app/dist/angular-app'
     globExpressions: '**'
 
@@ -98,7 +98,7 @@ steps:
   inputs:
     awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
-    bucketName: '$(BucketNameCode)'
+    bucketName: '$(bucketSourceCode)'
     sourceFolder: '$(Build.StagingDirectory)'
     globExpressions: '$(ObjectName)'
 
@@ -107,9 +107,9 @@ steps:
     awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(GetFunctionName)'
+    functionName: '$(getFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(BucketNameCode)'
+    s3Bucket: '$(bucketSourceCode)'
     s3ObjectKey: '$(ObjectName)'
 
 - task: LambdaDeployFunction@1
@@ -117,9 +117,9 @@ steps:
     awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(PostFunctionName)'
+    functionName: '$(postFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(BucketNameCode)'
+    s3Bucket: '$(bucketSourceCode)'
     s3ObjectKey: '$(ObjectName)'
 
 - task: LambdaDeployFunction@1
@@ -127,9 +127,9 @@ steps:
     awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(DeleteFunctionName)'
+    functionName: '$(deleteFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(BucketNameCode)'
+    s3Bucket: '$(bucketSourceCode)'
     s3ObjectKey: '$(ObjectName)'
 
 - task: LambdaDeployFunction@1
@@ -137,7 +137,7 @@ steps:
     awsCredentials: '$(awsServiceConnection)'
     regionName: '$(region)'
     deploymentMode: 'codeonly'
-    functionName: '$(PutFunctionName)'
+    functionName: '$(putFunctionName)'
     codeLocation: 's3object'
-    s3Bucket: '$(BucketNameCode)'
+    s3Bucket: '$(bucketSourceCode)'
     s3ObjectKey: '$(ObjectName)'
