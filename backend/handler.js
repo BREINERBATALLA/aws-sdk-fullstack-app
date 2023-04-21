@@ -41,7 +41,7 @@ exports.saveTask = async function (event) {
   const uuid1 = v4();
 
   const response = {
-    idTask: uuid1,
+    taskId: uuid1,
     description : requestBody.description
   }
 
@@ -73,7 +73,7 @@ exports.updateTask = async function (event) {
   const params = {
     TableName: dynamoDBTableName,
     Key: {
-      idTask: id,
+      taskId: id,
     },
     UpdateExpression: 'set description = :value',
     ExpressionAttributeValues: {
@@ -106,7 +106,7 @@ exports.deleteTask = async function (event) {
   const params = {
     TableName: dynamoDBTableName,
     Key: {
-      idTask: id,
+      taskId: id,
     },
     ReturnValues: "ALL_OLD",
   };
