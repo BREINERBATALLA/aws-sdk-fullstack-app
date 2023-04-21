@@ -21,10 +21,10 @@ export class TaskService {
 
   update(id: String, task:any){
 
-    return this.http.put(`https://${this.urlApiGateway}/tasks`+id, task)
+    return this.http.put(`https://${this.urlApiGateway}/tasks/`+id, task)
   }
 
   delete(id: String) {
-    return this.http.delete(`https://${this.urlApiGateway}/tasks`+id)
+    return this.http.delete(`https://${this.urlApiGateway}/tasks/`+id)
   }
 }
