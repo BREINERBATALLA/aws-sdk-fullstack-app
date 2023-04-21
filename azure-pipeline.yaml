@@ -89,9 +89,9 @@ steps:
           production: true,
           apiUrl: '$(UrlApiGateway)'
         };
-        EOF
+        EOF 
       workingDirectory: "$(System.DefaultWorkingDirectory)/frontend/angular-app/src/environments/"
-      displayName: Create environtment file, to pass env var to frontend app.
+      displayName: Create environtment file, to pass env var to frontend app
 
   - task: Bash@3
     inputs:
@@ -104,7 +104,7 @@ steps:
     inputs:
       awsCredentials: "$(awsServiceConnection)"
       regionName: "$(region)"
-      bucketName: "$(bucketCloudfront)"
+      bucketName: "$(BucketNameCloudFront)"
       sourceFolder: "$(System.DefaultWorkingDirectory)/frontend/angular-app/dist/angular-app"
       globExpressions: "**"
 
@@ -123,7 +123,7 @@ steps:
     inputs:
       awsCredentials: "$(awsServiceConnection)"
       regionName: "$(region)"
-      bucketName: "$(bucketSourceCode)"
+      bucketName: "$(BucketNameCode)"
       sourceFolder: "$(Build.StagingDirectory)"
       globExpressions: "$(ObjectName)"
 
@@ -132,9 +132,9 @@ steps:
       awsCredentials: "$(awsServiceConnection)"
       regionName: "$(region)"
       deploymentMode: "codeonly"
-      functionName: "$(getFunctionName)"
+      functionName: "$(GetFunctionName)"
       codeLocation: "s3object"
-      s3Bucket: "$(bucketSourceCode)"
+      s3Bucket: "$(BucketNameCode)"
       s3ObjectKey: "$(ObjectName)"
 
   - task: LambdaDeployFunction@1
@@ -142,9 +142,9 @@ steps:
       awsCredentials: "$(awsServiceConnection)"
       regionName: "$(region)"
       deploymentMode: "codeonly"
-      functionName: "$(postFunctionName)"
+      functionName: "$(PostFunctionName)"
       codeLocation: "s3object"
-      s3Bucket: "$(bucketSourceCode)"
+      s3Bucket: "$(BucketNameCode)"
       s3ObjectKey: "$(ObjectName)"
 
   - task: LambdaDeployFunction@1
@@ -152,9 +152,9 @@ steps:
       awsCredentials: "$(awsServiceConnection)"
       regionName: "$(region)"
       deploymentMode: "codeonly"
-      functionName: "$(deleteFunctionName)"
+      functionName: "$(DeleteFunctionName)"
       codeLocation: "s3object"
-      s3Bucket: "$(bucketSourceCode)"
+      s3Bucket: "$(BucketNameCode)"
       s3ObjectKey: "$(ObjectName)"
 
   - task: LambdaDeployFunction@1
@@ -162,7 +162,7 @@ steps:
       awsCredentials: "$(awsServiceConnection)"
       regionName: "$(region)"
       deploymentMode: "codeonly"
-      functionName: "$(putFunctionName)"
+      functionName: "$(PutFunctionName)"
       codeLocation: "s3object"
-      s3Bucket: "$(bucketSourceCode)"
+      s3Bucket: "$(BucketNameCode)"
       s3ObjectKey: "$(ObjectName)"
